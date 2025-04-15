@@ -1,6 +1,6 @@
 import glfw
 from OpenGL.GL import *
-
+from OpenGL.GLUT import *
 
 class App:
     def __init__(self, width: int, height: int, title: str) -> None:
@@ -8,9 +8,9 @@ class App:
         self.height = height
         self.title = title
 
+        glutInit()
         self.__set_up_glfw()
         self.__set_up_opengl()
-
 
     def __set_up_glfw(self) -> None:
         if not glfw.init():
@@ -31,6 +31,15 @@ class App:
     def __display(self):
         glClear(GL_COLOR_BUFFER_BIT)
 
+        glColor3f(1.0, 1.0, 1.0)  # Set color to white
+        glRasterPos2f(-0.5, 0.5)  # Position for the heading
+        glutBitmapString(GLUT_BITMAP_HELVETICA_18, b"OGL Lab# 03")
+
+        glRasterPos2f(-0.6, 0.4)  # Position for the subheading
+        glutBitmapString(GLUT_BITMAP_HELVETICA_12, b"Computer Graphics using OpenGL :)")
+
+        glFlush()
+
     def run(self) -> None:
         while not glfw.window_should_close(self._win):
             glfw.poll_events()
@@ -43,7 +52,6 @@ class App:
     def __exit__(self, exception_type, exception_value, exception_traceback) -> None:
         glfw.terminate()
 
-
 if __name__ == "__main__":
-    with App(640, 480, "Hello World") as app:
+    with App(640, 480, "OpenGL Text Example") as app:
         app.run()
